@@ -1,54 +1,56 @@
-
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Hand Quaternion Flipper</title>
-</head>
-<body>
-   <H1>Hand Quaternion Flipper</H1>
-    <label for="inputText">Paste quaternion rotation from Unity inspector here:</label>
-    <input type="text" id="inputText" placeholder="Enter text here">
+  </head>
+  <body>
+    <h1>Hand Quaternion Flipper</h1>
+    <label for="inputText"
+      >Paste quaternion rotation from Unity inspector here:</label
+    >
+    <input type="text" id="inputText" placeholder="Enter text here" />
     <button onclick="filpQuat()">Switch Hand</button>
-    <p id="outputText"></p>
+    <p></p>
+    <label for="outputText">Output:</label>
+    <textarea id="outputText" rows="1" style="width: 80%"></textarea>
     <button onclick="copyToClipboard()">Copy to Clipboard</button>
     <p>
-        <br/>
-        Example input should look like : Quaternion(0.329619288,-0.264241219,0.681542277,0.597518027)
+      <br />
+      Example input should look like :
+      Quaternion(0.329619288,-0.264241219,0.681542277,0.597518027)
     </p>
 
     <script>
-        function filpQuat() {
-            var inputText = document.getElementById('inputText').value;
-          
-            var dims = extractFloats(inputText);
-            dim[1] *= -1.0;
-            dim[2] *= -1.0;
-            var flippedValue = `Quaternion(${dim[0]},${dim[1]},${dim[2]},${dim[3]})`;
-            document.getElementById('outputText').innerText = flippedValue;
-        }
+      function filpQuat() {
+        var inputText = document.getElementById("inputText").value;
+        var dims = extractFloats(inputText);
+        dims[1] *= -1.0;
+        dims[2] *= -1.0;
+        var flippedValue = `Quaternion(${dims[0]},${dims[1]},${dims[2]},${dims[3]})`;
+        document.getElementById("outputText").innerText = flippedValue;
+      }
 
-        function copyToClipboard() {
-            var outputText = document.getElementById('outputText');
-            var textArea = document.createElement("textarea");
-            textArea.value = outputText.textContent;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand("Copy");
-            textArea.remove();
-        }
+      function copyToClipboard() {
+        var outputText = document.getElementById("outputText");
+        outputText.select();
+        document.execCommand("Copy");
+        console.log(`Flipped output was: ${outputText.value}`);
+      }
 
-        function extractFloats(quaternionString) {
-            // Remove the "Quaternion(" at the start and the ")" at the end
-            var numbersString = quaternionString.replace('Quaternion(', '').replace(')', '');
-            
-            // Split the string into an array of strings
-            var numbersArray = numbersString.split(',');
-            
-            // Convert the array of strings into an array of floats
-            var floatsArray = numbersArray.map(Number);
-            
-            return floatsArray;
-        }
+      function extractFloats(quaternionString) {
+        // Remove the "Quaternion(" at the start and the ")" at the end
+        var numbersString = quaternionString
+          .replace("Quaternion(", "")
+          .replace(")", "");
+
+        // Split the string into an array of strings
+        var numbersArray = numbersString.split(",");
+
+        // Convert the array of strings into an array of floats
+        var floatsArray = numbersArray.map(Number);
+
+        return floatsArray;
+      }
     </script>
-</body>
+  </body>
 </html>
