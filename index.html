@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hand Quaternion Flipper</title>
+</head>
+<body>
+    <input type="text" id="inputText" placeholder="Enter text here">
+    <button onclick="filpQuat()">Switch Hand</button>
+    <p id="outputText"></p>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <script>
+        function filpQuat() {
+            var inputText = document.getElementById('inputText').value;
+          //Quaternion(0.329619288,-0.264241219,0.681542277,0.597518027)
+            var capitalizedText = inputText.toUpperCase();
+            document.getElementById('outputText').innerText = capitalizedText;
+        }
+
+        function copyToClipboard() {
+            var outputText = document.getElementById('outputText');
+            var textArea = document.createElement("textarea");
+            textArea.value = outputText.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
+        }
+    </script>
+</body>
+</html>
