@@ -5,17 +5,26 @@
     <title>Hand Quaternion Flipper</title>
 </head>
 <body>
+   <H1>Hand Quaternion Flipper</H1>
+    <label for="inputText">Paste quaternion rotation from Unity inspector here:</label>
     <input type="text" id="inputText" placeholder="Enter text here">
     <button onclick="filpQuat()">Switch Hand</button>
     <p id="outputText"></p>
     <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    <p>
+        <br/>
+        Example input should look like : Quaternion(0.329619288,-0.264241219,0.681542277,0.597518027)
+    </p>
 
     <script>
         function filpQuat() {
             var inputText = document.getElementById('inputText').value;
-          //Quaternion(0.329619288,-0.264241219,0.681542277,0.597518027)
-            var capitalizedText = inputText.toUpperCase();
-            document.getElementById('outputText').innerText = capitalizedText;
+          
+            var dims = extractFloats(inputText);
+            dim[1] *= -1.0;
+            dim[2] *= -1.0;
+            var flippedValue = `Quaternion(${dim[0]},${dim[1]},${dim[2]},${dim[3]})`;
+            document.getElementById('outputText').innerText = flippedValue;
         }
 
         function copyToClipboard() {
@@ -26,6 +35,19 @@
             textArea.select();
             document.execCommand("Copy");
             textArea.remove();
+        }
+
+        function extractFloats(quaternionString) {
+            // Remove the "Quaternion(" at the start and the ")" at the end
+            var numbersString = quaternionString.replace('Quaternion(', '').replace(')', '');
+            
+            // Split the string into an array of strings
+            var numbersArray = numbersString.split(',');
+            
+            // Convert the array of strings into an array of floats
+            var floatsArray = numbersArray.map(Number);
+            
+            return floatsArray;
         }
     </script>
 </body>
